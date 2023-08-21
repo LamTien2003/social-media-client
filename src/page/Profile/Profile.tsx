@@ -8,12 +8,17 @@ import { useGetUserQuery } from '@/services/userApiSlice';
 import Loading from '@/components/Loading/Loading';
 import Container from '@/components/Container/Container';
 import User from '@/type/User';
+import { useEffect } from 'react';
 
 const Profile = () => {
     const { id } = useParams();
     const currentUser = useSelector((state: RootState) => state.user.user);
     const { data, error, isLoading } = useGetUserQuery(id || skipToken);
     const user = data?.data?.data;
+
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, [id, data]);
 
     return (
         <div className="max-w-[960px] mx-auto ">

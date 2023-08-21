@@ -172,8 +172,8 @@ const HeadBox = (props: Props) => {
                         ) : (
                             <Cropper
                                 ref={cropperRef}
-                                style={{ height: 400, width: '100%' }}
-                                zoomTo={0.5}
+                                style={{ height: 400 }}
+                                zoomTo={0.25}
                                 initialAspectRatio={1}
                                 src={inputAvatar}
                                 viewMode={1}

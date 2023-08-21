@@ -149,9 +149,9 @@ const PostBox = (props: PostBoxProps) => {
                 <div className="mt-4 mr-12">
                     <p className="text-gray-500 dark:text-content-200 text-xs leading-7 text-left font-medium ">
                         {data?.content}
-                        <NavLink to="" className="text-content-blue text-xs ml-1">
+                        {/* <NavLink to="" className="text-content-blue text-xs ml-1">
                             See more
-                        </NavLink>
+                        </NavLink> */}
                     </p>
                 </div>
 

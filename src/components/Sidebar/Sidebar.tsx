@@ -27,7 +27,7 @@ const Sidebar = memo((props: SidebarProps) => {
             {options?.map((item, index) => (
                 <div className="flex flex-col justify-center w-full" key={index}>
                     <h3 className="text-xs font-semibold text-content-100 mb-6"> {item.title}</h3>
-                    {item.children.map((item, index) => (
+                    {item?.children?.map((item, index) => (
                         <NavLink
                             to={item.to}
                             className="flex items-center space-x-4 p-2 rounded-2xl hover:bg-dark-100 mb-3 group/item"

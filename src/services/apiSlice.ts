@@ -13,7 +13,7 @@ const mutex = new Mutex();
 // maxRetries: 5 is the default, and can be omitted. Shown for documentation purposes.
 
 const baseQuery = fetchBaseQuery({
-    baseUrl: urlProduction,
+    baseUrl: 'http://127.0.0.1:3000/',
     prepareHeaders(headers, { getState }) {
         const token = (getState() as RootState).user.accessToken || getToken();
         if (token) {

@@ -22,11 +22,12 @@ const StoryBox = () => {
                         <div
                             className="relative min-w-[125px] h-[200px] rounded-xl object-cover cursor-pointer after:absolute after:content-[''] after:w-full after:h-full after:from-slate-900 after:bottom-0 after:left-0 after:rounded-xl after:bg-[linear-gradient(180deg,_rgba(0,0,0,.01)_60%,_rgba(0,0,0,.9)_100%)] mobile:w-1/3"
                             style={{
-                                backgroundImage: `url(${images.story})`,
+                                backgroundImage: `url(${images.cat})`,
+                                backgroundSize: 'cover',
                             }}
                         >
                             <div className="absolute bottom-7 left-1/2 -translate-x-1/2 flex flex-col items-center justify-center w-full z-10">
-                                <img src={images.story} alt="" className="w-12 h-12 rounded-full" />
+                                <img src={images.cat} alt="" className="w-12 h-12 rounded-full object-cover" />
                                 <p className="text-white font-semibold text-sm">Lâm Tiến</p>
                             </div>
                         </div>

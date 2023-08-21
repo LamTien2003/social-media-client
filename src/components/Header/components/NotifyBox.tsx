@@ -6,56 +6,56 @@ const NotifyBox = () => {
             <h4 className="text-sm font-bold mb-4">Thông báo</h4>
             <div className="flex flex-col space-y-4">
                 <div className="flex space-x-4">
-                    <img src={images.story} alt="" className="w-10 h-10 rounded-full object-cover" />
+                    <img src={images.cat} alt="" className="w-10 h-10 rounded-full object-cover" />
                     <div className="flex flex-1 flex-col items-start">
                         <h5 className="text-sm font-semibold">Lâm Tiến</h5>
                         <p className="text-content-100 text-xs">There are many variation of pass</p>
                     </div>
                 </div>
                 <div className="flex space-x-4">
-                    <img src={images.story} alt="" className="w-10 h-10 rounded-full object-cover" />
+                    <img src={images.cat} alt="" className="w-10 h-10 rounded-full object-cover" />
                     <div className="flex flex-1 flex-col items-start">
                         <h5 className="text-sm font-semibold">Lâm Tiến</h5>
                         <p className="text-content-100 text-xs">There are many variation of pass</p>
                     </div>
                 </div>
                 <div className="flex space-x-4">
-                    <img src={images.story} alt="" className="w-10 h-10 rounded-full object-cover" />
+                    <img src={images.cat} alt="" className="w-10 h-10 rounded-full object-cover" />
                     <div className="flex flex-1 flex-col items-start">
                         <h5 className="text-sm font-semibold">Lâm Tiến</h5>
                         <p className="text-content-100 text-xs">There are many variation of pass</p>
                     </div>
                 </div>
                 <div className="flex space-x-4">
-                    <img src={images.story} alt="" className="w-10 h-10 rounded-full object-cover" />
+                    <img src={images.cat} alt="" className="w-10 h-10 rounded-full object-cover" />
                     <div className="flex flex-1 flex-col items-start">
                         <h5 className="text-sm font-semibold">Lâm Tiến</h5>
                         <p className="text-content-100 text-xs">There are many variation of pass</p>
                     </div>
                 </div>
                 <div className="flex space-x-4">
-                    <img src={images.story} alt="" className="w-10 h-10 rounded-full object-cover" />
+                    <img src={images.cat} alt="" className="w-10 h-10 rounded-full object-cover" />
                     <div className="flex flex-1 flex-col items-start">
                         <h5 className="text-sm font-semibold">Lâm Tiến</h5>
                         <p className="text-content-100 text-xs">There are many variation of pass</p>
                     </div>
                 </div>
                 <div className="flex space-x-4">
-                    <img src={images.story} alt="" className="w-10 h-10 rounded-full object-cover" />
+                    <img src={images.cat} alt="" className="w-10 h-10 rounded-full object-cover" />
                     <div className="flex flex-1 flex-col items-start">
                         <h5 className="text-sm font-semibold">Lâm Tiến</h5>
                         <p className="text-content-100 text-xs">There are many variation of pass</p>
                     </div>
                 </div>
                 <div className="flex space-x-4">
-                    <img src={images.story} alt="" className="w-10 h-10 rounded-full object-cover" />
+                    <img src={images.cat} alt="" className="w-10 h-10 rounded-full object-cover" />
                     <div className="flex flex-1 flex-col items-start">
                         <h5 className="text-sm font-semibold">Lâm Tiến</h5>
                         <p className="text-content-100 text-xs">There are many variation of pass</p>
                     </div>
                 </div>
                 <div className="flex space-x-4">
-                    <img src={images.story} alt="" className="w-10 h-10 rounded-full object-cover" />
+                    <img src={images.cat} alt="" className="w-10 h-10 rounded-full object-cover" />
                     <div className="flex flex-1 flex-col items-start">
                         <h5 className="text-sm font-semibold">Lâm Tiến</h5>
                         <p className="text-content-100 text-xs">There are many variation of pass</p>
