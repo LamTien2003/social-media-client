@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import User from '@/type/User';
 import { apiSlice } from './apiSlice';
 import { ResponseApi } from '@/type/Response';
@@ -28,7 +29,7 @@ export const authApi = apiSlice.injectEndpoints({
                     throw error.message;
                 }
             },
-            invalidatesTags: (result, error, body) => {
+            invalidatesTags: (_result, error, _body) => {
                 if (!error) {
                     return [{ type: 'Users', id: 'CURRENT' }];
                 }

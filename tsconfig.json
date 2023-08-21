@@ -26,5 +26,8 @@
         }
     },
     "include": ["src"],
+    "rules": {
+        "no-unused-vars": "off"
+    },
     "references": [{ "path": "./tsconfig.node.json" }]
 }

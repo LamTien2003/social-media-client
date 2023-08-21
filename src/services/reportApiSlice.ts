@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { ResponseApi } from './../type/Response';
 import { apiSlice } from './apiSlice';
 
@@ -32,7 +33,7 @@ export const reportApi = apiSlice.injectEndpoints({
                 }
             },
 
-            invalidatesTags: (result, error, body) => (error ? [] : [{ type: 'Reports', id: body.id }]),
+            invalidatesTags: (_result, error, body) => (error ? [] : [{ type: 'Reports', id: body.id }]),
         }),
     }),
 });

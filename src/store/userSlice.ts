@@ -31,7 +31,7 @@ const userSlice = createSlice({
             state.user = payload.data.data;
             state.accessToken = payload.data.accessToken;
         });
-        builder.addMatcher(authApi.endpoints.logout.matchFulfilled, (state, { payload }) => {
+        builder.addMatcher(authApi.endpoints.logout.matchFulfilled, (state, _) => {
             state.user = null;
             state.accessToken = null;
         });

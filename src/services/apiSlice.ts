@@ -6,7 +6,8 @@ import { ResponseApi } from '@/type/Response';
 import { Mutex } from 'async-mutex';
 
 const urlProduction = 'https://social-media-server-d92z.onrender.com';
-const urlLocalhost = 'http://127.0.0.1:3000/';
+// const urlLocalhost = 'http://127.0.0.1:3000/';
+
 // Using for fix mutiple call refresh token
 const mutex = new Mutex();
 // maxRetries: 5 is the default, and can be omitted. Shown for documentation purposes.
@@ -79,5 +80,5 @@ export const apiSlice = createApi({
     tagTypes: ['Posts', 'Users', 'Reports'],
     baseQuery: staggeredBaseQuery,
 
-    endpoints: (builder) => ({}),
+    endpoints: (_builder) => ({}),
 });

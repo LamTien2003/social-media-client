@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import User from '@/type/User';
 import { apiSlice } from './apiSlice';
 import { ResponseApi } from '@/type/Response';
@@ -70,7 +71,7 @@ export const userApi = apiSlice.injectEndpoints({
                 }
             },
 
-            invalidatesTags: (result, error, body) => {
+            invalidatesTags: (_result, error, body) => {
                 if (error) {
                     return [];
                 } else {
@@ -93,7 +94,7 @@ export const userApi = apiSlice.injectEndpoints({
                 }
             },
 
-            invalidatesTags: (result, error, body) => {
+            invalidatesTags: (_result, error, body) => {
                 if (error) {
                     return [];
                 } else {
@@ -116,7 +117,7 @@ export const userApi = apiSlice.injectEndpoints({
                 }
             },
 
-            invalidatesTags: (result, error, body) => {
+            invalidatesTags: (_result, error, body) => {
                 if (!error) {
                     return [
                         { type: 'Users', id: body },
@@ -139,7 +140,7 @@ export const userApi = apiSlice.injectEndpoints({
                 }
             },
 
-            invalidatesTags: (result, error, body) => {
+            invalidatesTags: (_result, error, body) => {
                 if (!error) {
                     return [
                         { type: 'Users', id: body },
@@ -163,7 +164,7 @@ export const userApi = apiSlice.injectEndpoints({
                 }
             },
 
-            invalidatesTags: (result, error, body) => {
+            invalidatesTags: (result, error, _body) => {
                 if (!error) {
                     return [
                         { type: 'Users', id: result?.data?.data?.id },
@@ -186,7 +187,7 @@ export const userApi = apiSlice.injectEndpoints({
                 }
             },
 
-            invalidatesTags: (result, error, body) => {
+            invalidatesTags: (_result, error, body) => {
                 if (!error) {
                     return [
                         { type: 'Users', id: body },
@@ -212,7 +213,7 @@ export const userApi = apiSlice.injectEndpoints({
                 }
             },
 
-            invalidatesTags: (result, error, body) => {
+            invalidatesTags: (_result, error, body) => {
                 if (!error) {
                     return [
                         { type: 'Users', id: body },

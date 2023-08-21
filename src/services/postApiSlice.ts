@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { ResponseApi } from './../type/Response';
 import Post from '@/type/Post';
 import { apiSlice } from './apiSlice';
@@ -43,7 +44,7 @@ export const postApi = apiSlice.injectEndpoints({
                 }
             },
 
-            invalidatesTags: (result, error, body) => (error ? [] : [{ type: 'Posts', id: 'LIST' }]),
+            invalidatesTags: (_result, error, _body) => (error ? [] : [{ type: 'Posts', id: 'LIST' }]),
         }),
         removePost: builder.mutation<ResponseApi<Post>, string>({
             query(body) {
@@ -57,7 +58,7 @@ export const postApi = apiSlice.injectEndpoints({
                 }
             },
 
-            invalidatesTags: (result, error, body) =>
+            invalidatesTags: (_result, error, body) =>
                 error
                     ? []
                     : [
@@ -78,7 +79,7 @@ export const postApi = apiSlice.injectEndpoints({
                 }
             },
 
-            invalidatesTags: (result, error, body) =>
+            invalidatesTags: (_result, error, body) =>
                 error
                     ? []
                     : [
@@ -100,7 +101,7 @@ export const postApi = apiSlice.injectEndpoints({
                 }
             },
 
-            invalidatesTags: (result, error, body) => (error ? [] : [{ type: 'Posts', id: body.id }]),
+            invalidatesTags: (_result, error, body) => (error ? [] : [{ type: 'Posts', id: body.id }]),
         }),
         reactionPost: builder.mutation<ResponseApi<Post>, { id: string; emotion: string }>({
             query(body) {
@@ -116,7 +117,7 @@ export const postApi = apiSlice.injectEndpoints({
                 }
             },
 
-            invalidatesTags: (result, error, body) => (error ? [] : [{ type: 'Posts', id: body.id }]),
+            invalidatesTags: (_result, error, body) => (error ? [] : [{ type: 'Posts', id: body.id }]),
         }),
         removeReactionPost: builder.mutation<ResponseApi<Post>, string>({
             query(body) {
@@ -130,7 +131,7 @@ export const postApi = apiSlice.injectEndpoints({
                 }
             },
 
-            invalidatesTags: (result, error, body) => (error ? [] : [{ type: 'Posts', id: body }]),
+            invalidatesTags: (_result, error, body) => (error ? [] : [{ type: 'Posts', id: body }]),
         }),
     }),
 });
