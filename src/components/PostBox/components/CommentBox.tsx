@@ -1,7 +1,7 @@
 import { useCommentPostMutation } from '@/services/postApiSlice';
 import { faPaperPlane, faUpload } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { ChangeEvent, FormEvent, useRef, useState } from 'react';
+import { ChangeEvent, useRef, useState } from 'react';
 import { toast } from 'react-toastify';
 import Comment from '@/type/Comment';
 import { useSelector } from 'react-redux';
@@ -28,14 +28,24 @@ const CommentBox = (props: CommentBoxProps) => {
             setPreviewImage(URL.createObjectURL(file));
         }
     };
-    const handleTextChange = (e: FormEvent<HTMLDivElement>) => {
+    const handleTextChange: React.KeyboardEventHandler<HTMLInputElement> = async (e) => {
+        if (text !== '' && e.keyCode === 13 && e.key === 'Enter') {
+            // PreventDefault để chặn div contentable xuất hiện khoảng cách
+            e.preventDefault();
+            await handleSubmitComment();
+            return;
+        }
         const target = e.target as HTMLDivElement;
         const value = target.innerText;
         setText(value);
     };
     const textRef = useRef<HTMLDivElement>(null);
+
     const handleSubmitComment = async () => {
         try {
+            if (isLoading) {
+                return toast.error('Thao tác đang được thực hiện, vui lòng chờ');
+            }
             const form = new FormData() as FormData;
             form.append('comment', text);
             if (file !== null) {
@@ -67,15 +77,20 @@ const CommentBox = (props: CommentBoxProps) => {
                         placeholder="Viết bình luận..."
                         contentEditable={true}
                         ref={textRef}
-                        onInput={handleTextChange}
+                        onKeyDown={handleTextChange}
                     ></div>
                     <div className="absolute top-2 right-4 flex space-x-4 cursor-pointer ">
                         <span
                             className="text-sm font-semibold text-content-300 border-r border-light-300 px-2 "
                             onClick={handleSubmitComment}
                         >
-                            Gửi <FontAwesomeIcon icon={faPaperPlane} />
-                            {isLoading && <Loading />}
+                            {isLoading ? (
+                                <Loading />
+                            ) : (
+                                <>
+                                    Gửi <FontAwesomeIcon icon={faPaperPlane} />
+                                </>
+                            )}
                         </span>
 
                         <div>
