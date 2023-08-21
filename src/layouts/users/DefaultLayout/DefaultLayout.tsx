@@ -1,7 +1,7 @@
 import Header from '@/components/Header/Header';
 import Sidebar from '@/components/Sidebar/Sidebar';
 
-import { RootState, useAppDispatch } from '@/store/store';
+import { RootState } from '@/store/store';
 import { InitialValue } from '@/store/themeSlice';
 import { useSelector } from 'react-redux';
 
@@ -15,7 +15,7 @@ import { useLogoutMutation } from '@/services/authApiSlice';
 const DefaultLayout = () => {
     const theme = useSelector<RootState, InitialValue>((state) => state.theme);
     const currentUser = useSelector((state: RootState) => state.user.user);
-    const [logout, { isLoading }] = useLogoutMutation();
+    const [logout] = useLogoutMutation();
 
     const sidebarOption = useMemo(() => {
         return [
@@ -41,7 +41,7 @@ const DefaultLayout = () => {
                         label: 'Đăng xuất',
                         to: '/auth',
                         onClick: (e: React.MouseEvent) => {
-                            // e.preventDefault();
+                            e.preventDefault();
                             logout();
                         },
                     },

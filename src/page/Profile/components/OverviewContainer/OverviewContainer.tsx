@@ -13,13 +13,14 @@ import { useSelector } from 'react-redux';
 import { RootState } from '@/store/store';
 import { useMemo } from 'react';
 import User from '@/type/User';
+import Loading from '@/components/Loading/Loading';
 
 const OverviewContainer = () => {
     const { id } = useParams();
     const currentUser = useSelector((state: RootState) => state.user.user);
 
     // SkipToken use for variable id maybe undefine
-    const { data, isLoading: isGettingUser, error } = useGetUserQuery(id || skipToken);
+    const { data, isLoading: isGettingUser } = useGetUserQuery(id || skipToken);
     const { data: postsData, isLoading } = useGetPostsOfUserQuery(id || skipToken);
     const user = data?.data?.data;
     const posts = postsData?.data?.data;
@@ -27,6 +28,7 @@ const OverviewContainer = () => {
     const listImagePost = useMemo(() => {
         return posts?.map((item) => item.imagePost).flat() || [];
     }, [posts]);
+
     return (
         <div className="flex items-start space-x-4">
             <div className="w-4/12">
@@ -37,6 +39,7 @@ const OverviewContainer = () => {
             <div className="flex-1">
                 {user?.id === currentUser?.id && <AddPostBox />}
 
+                {isLoading && <Loading />}
                 {posts?.length ? (
                     posts?.map((item, index) => <PostBox key={index} data={item} />)
                 ) : (

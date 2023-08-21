@@ -1,3 +1,4 @@
+import Loading from '@/components/Loading/Loading';
 import { useBanUserMutation, useUnbanUserMutation } from '@/services/userApiSlice';
 import User from '@/type/User';
 import { toast } from 'react-toastify';
@@ -105,6 +106,7 @@ const UserBox = (props: Props) => {
                         onClick={handleUnbanUser}
                     >
                         Gỡ chặn người dùng
+                        {isUnbanning && <Loading />}
                     </button>
                 ) : (
                     <button
@@ -112,6 +114,7 @@ const UserBox = (props: Props) => {
                         onClick={handleBanUser}
                     >
                         Chặn người dùng
+                        {isBanning && <Loading />}
                     </button>
                 )}
                 <button className="w-3/4 py-2 my-2 font-semibold bg-red-500 rounded-full">Xóa người dùng này</button>

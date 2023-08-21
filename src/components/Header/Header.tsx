@@ -1,6 +1,6 @@
 import images from '@/assets/images';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBell, faGear, faHome, faMessage, faTv, faUser, faUserFriends } from '@fortawesome/free-solid-svg-icons';
+import { faBell, faGear, faHome, faMessage, faUser, faUserFriends } from '@fortawesome/free-solid-svg-icons';
 import { NavLink } from 'react-router-dom';
 
 import Search from '@/components/Search/Search';
@@ -9,7 +9,6 @@ import Messagebar from '@/components/Messagebar/Messagebar';
 import NotifyBox from './components/NotifyBox';
 import SettingBox from './components/SettingBox';
 import { useSelector } from 'react-redux';
-import User from '@/type/User';
 import { RootState } from '@/store/store';
 
 const Header = () => {

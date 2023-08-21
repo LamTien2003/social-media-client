@@ -1,4 +1,4 @@
-import { MouseEventHandler, memo } from 'react';
+import { memo } from 'react';
 import { NavLink } from 'react-router-dom';
 import { twMerge } from 'tailwind-merge';
 

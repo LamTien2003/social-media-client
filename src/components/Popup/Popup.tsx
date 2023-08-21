@@ -1,5 +1,5 @@
 import useClickOutside from '@/hooks/useClickOutside';
-import { ReactNode, useState } from 'react';
+import { ReactNode } from 'react';
 
 interface Props {
     children?: ReactNode;

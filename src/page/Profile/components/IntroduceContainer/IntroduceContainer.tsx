@@ -7,9 +7,11 @@ import { useOutletContext } from 'react-router-dom';
 import User from '@/type/User';
 import { useChangeMeMutation } from '@/services/userApiSlice';
 import { toast } from 'react-toastify';
+import Loading from '@/components/Loading/Loading';
 
 const IntroduceContainer = () => {
-    const { user, currentUser } = useOutletContext<{ user: User; currentUser: User }>();
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { user } = useOutletContext<{ user: User; currentUser: User }>();
     const [changeMe, { isLoading: isChangging }] = useChangeMeMutation();
 
     const [isEditFirstName, setIsEditFirstName] = useState(false);
@@ -98,6 +100,7 @@ const IntroduceContainer = () => {
                                 onClick={handleSubmitIntroduce}
                             >
                                 Lưu thay đổi
+                                {isChangging && <Loading />}
                             </button>
                         )}
                     </div>

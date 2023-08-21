@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import useClickOutside from '@/hooks/useClickOutside';
 
-import images from '@/assets/images';
 import PostBox from '@/components/PostBox/PostBox';
 import Report from '@/type/Report';
 import { useRemovePostMutation, useRestorePostMutation } from '@/services/postApiSlice';

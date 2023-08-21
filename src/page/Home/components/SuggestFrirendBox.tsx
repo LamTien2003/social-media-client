@@ -1,4 +1,3 @@
-import images from '@/assets/images';
 import Container from '@/components/Container/Container';
 import { NavLink } from 'react-router-dom';
 import icons from '@/assets/icons';

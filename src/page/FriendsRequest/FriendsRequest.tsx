@@ -23,7 +23,7 @@ const FriendsRequest = () => {
     };
     const handleCancelFriendRequest = async (id: string) => {
         try {
-            const response = await cancelFriend(id).unwrap();
+            await cancelFriend(id).unwrap();
             toast.error('Hủy lời mời kết bạn thành công');
         } catch (err: any) {
             toast.warn(err.msg);

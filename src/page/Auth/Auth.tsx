@@ -1,6 +1,5 @@
 import { useState } from 'react';
 
-import images from '@/assets/images';
 import Login from './components/Login';
 import Register from './components/Register';
 

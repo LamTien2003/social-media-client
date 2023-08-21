@@ -1,4 +1,3 @@
-import images from '@/assets/images';
 import Container from '@/components/Container/Container';
 import { useAddPostMutation } from '@/services/postApiSlice';
 import { faPen, faPhotoVideo } from '@fortawesome/free-solid-svg-icons';

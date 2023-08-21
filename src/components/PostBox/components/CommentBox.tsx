@@ -1,4 +1,3 @@
-import images from '@/assets/images';
 import { useCommentPostMutation } from '@/services/postApiSlice';
 import { faPaperPlane, faUpload } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -7,6 +6,7 @@ import { toast } from 'react-toastify';
 import Comment from '@/type/Comment';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store/store';
+import Loading from '@/components/Loading/Loading';
 
 interface CommentBoxProps {
     listComment: Comment[];
@@ -75,6 +75,7 @@ const CommentBox = (props: CommentBoxProps) => {
                             onClick={handleSubmitComment}
                         >
                             Gửi <FontAwesomeIcon icon={faPaperPlane} />
+                            {isLoading && <Loading />}
                         </span>
 
                         <div>

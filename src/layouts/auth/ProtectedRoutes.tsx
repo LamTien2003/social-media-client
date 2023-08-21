@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect } from 'react';
+import { useLayoutEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useGetCurrentUserQuery } from '@/services/userApiSlice';
 import { setCurrentUser } from '@/store/userSlice';
