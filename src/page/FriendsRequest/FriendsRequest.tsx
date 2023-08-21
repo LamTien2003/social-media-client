@@ -12,6 +12,9 @@ const FriendsRequest = () => {
 
     const handleAcceptFriend = async (id: string) => {
         try {
+            if (isAccepting) {
+                return toast.error('Hành động đang được thực hiện, vui lòng đợi');
+            }
             const response = await acceptFriend(id).unwrap();
             if (response.status !== 200 || response?.data?.status !== 'success') {
                 throw response;

@@ -4,10 +4,26 @@ import { useAcceptFriendMutation } from '@/services/userApiSlice';
 import { RootState } from '@/store/store';
 import { useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 const FriendRequestBox = () => {
     const user = useSelector((state: RootState) => state.user.user);
     const [acceptFriend, { isLoading }] = useAcceptFriendMutation();
+
+    const handleAcceptFriend = async (id: string) => {
+        try {
+            if (isLoading) {
+                return toast.error('Hành động đang được thực hiện, vui lòng đợi');
+            }
+            const response = await acceptFriend(id).unwrap();
+            if (response.status !== 200 || response?.data?.status !== 'success') {
+                throw response;
+            }
+            toast.success('Kết bạn thành công');
+        } catch (err: any) {
+            toast.warn(err.msg);
+        }
+    };
     return (
         <Container classNames="mt-0 p-0">
             <div className="flex justify-between p-6 border-b border-b-dark-500-100 ">
@@ -38,11 +54,10 @@ const FriendRequestBox = () => {
                                 onClick={(e) => {
                                     e.preventDefault();
                                     e.stopPropagation();
-                                    acceptFriend(item?.id);
+                                    handleAcceptFriend(item?.id);
                                 }}
                             >
-                                Xác nhận
-                                {isLoading && <Loading />}
+                                {isLoading ? <Loading /> : 'Xác nhận'}
                             </button>
                             <button className="bg-light-300 text-content-300 text-xs font-bold rounded-full px-6 py-[10px]">
                                 Xóa
