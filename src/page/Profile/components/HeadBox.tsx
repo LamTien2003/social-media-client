@@ -110,7 +110,7 @@ const HeadBox = (props: Props) => {
     };
     const handleCancelFriendRequest = async () => {
         try {
-            const response = await cancelFriend(user?.id as string).unwrap();
+            await cancelFriend(user?.id as string).unwrap();
             toast.error('Hủy lời mời kết bạn thành công');
         } catch (err: any) {
             toast.warn(err.msg);
