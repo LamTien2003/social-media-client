@@ -47,7 +47,9 @@ const FriendsRequest = () => {
                             />
                             <div className="w-full px-4 mt-2 text-left">
                                 <h4 className="font-semibold text-md dark:text-white">Lâm Tiến</h4>
-                                <span className="text-xs text-content-300 font-semibold">7 bạn chung</span>
+                                <span className="text-xs text-content-300 font-semibold">
+                                    {item?.commonFriends} bạn chung
+                                </span>
                             </div>
                             <div className="w-full flex flex-col space-y-1 items-center justify-center px-2 mt-2">
                                 <button
