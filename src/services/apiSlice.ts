@@ -14,7 +14,6 @@ const mutex = new Mutex();
 
 const baseQuery = fetchBaseQuery({
     baseUrl: urlProduction,
-    credentials: 'include',
     prepareHeaders(headers, { getState }) {
         const token = (getState() as RootState).user.accessToken || getToken();
         if (token) {
@@ -22,6 +21,7 @@ const baseQuery = fetchBaseQuery({
         }
         return headers;
     },
+    credentials: 'include',
 });
 const baseQueryWithReauth: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQueryError> = async (
     args,
