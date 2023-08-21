@@ -35,7 +35,11 @@ const FriendRequestBox = () => {
                         <div className="flex items-center space-x-2">
                             <button
                                 className="bg-content-blue text-white text-xs font-bold rounded-full px-6 py-[10px]"
-                                onClick={() => acceptFriend(item?.id)}
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    e.stopPropagation();
+                                    acceptFriend(item?.id);
+                                }}
                             >
                                 Xác nhận
                                 {isLoading && <Loading />}
