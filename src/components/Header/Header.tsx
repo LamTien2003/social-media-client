@@ -46,6 +46,7 @@ const Header = () => {
 
     useEffect(() => {
         const handleNotificationReceived = (notification: Notification) => {
+            console.log(notification);
             dispatch(addNotification(notification));
         };
         const handleMessageReceived = (message: Message) => {

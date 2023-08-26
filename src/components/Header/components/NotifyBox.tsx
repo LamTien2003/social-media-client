@@ -1,6 +1,4 @@
-import { socket } from '@/services/socket';
 import Notification from '@/type/Notification';
-import { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 
 interface Props {

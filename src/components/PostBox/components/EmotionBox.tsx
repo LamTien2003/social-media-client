@@ -105,7 +105,6 @@ const EmotionBox = (props: EmotionBoxProps) => {
                 createdAt: Date.now(),
                 updatedAt: Date.now(),
             });
-            socket.emit('test');
         } catch (err: any) {
             toast.warn(err);
         }
