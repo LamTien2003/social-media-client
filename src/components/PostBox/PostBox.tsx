@@ -178,7 +178,7 @@ const PostBox = (props: PostBoxProps) => {
                 </div>
 
                 <div className="w-full flex items-center border-t border-light-400 dark:border-t-light-100 text-content-100 mt-2 py-1">
-                    <EmotionBox idPost={data?.id} likeList={data?.likes} />
+                    <EmotionBox idPost={data?.id} likeList={data?.likes} postedBy={data?.user} />
                     <div
                         className="w-1/2 flex justify-center items-center space-x-2 text-sm py-2 px-6 rounded-md cursor-pointer group text-content-300 hover:bg-content-300 hover:text-white dark:hover:bg-slate-600 dark:text-white dark:hover:text-dark-200"
                         onClick={() => setIsCommentBox((prev) => !prev)}

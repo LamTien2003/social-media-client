@@ -77,7 +77,7 @@ const CommentBox = (props: CommentBoxProps) => {
                         placeholder="Viết bình luận..."
                         contentEditable={true}
                         ref={textRef}
-                        onKeyDown={handleTextChange}
+                        onKeyUp={handleTextChange}
                     ></div>
                     <div className="absolute top-2 right-4 flex space-x-4 cursor-pointer ">
                         <span

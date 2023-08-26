@@ -9,10 +9,56 @@ import Messagebar from '@/components/Messagebar/Messagebar';
 import NotifyBox from './components/NotifyBox';
 import SettingBox from './components/SettingBox';
 import { useSelector } from 'react-redux';
-import { RootState } from '@/store/store';
+import { RootState, useAppDispatch } from '@/store/store';
+
+import { useGetNotificationsQuery } from '@/services/notificationApiSlice';
+import { useEffect, useMemo } from 'react';
+import { socket } from '@/services/socket';
+import { useGetConversationsQuery } from '@/services/conversationApiSlice';
+import Message from '@/type/Message';
+import { addNotification, updateLastMessage } from '@/store/sideSlice';
+import Loading from '../Loading/Loading';
+import Notification from '@/type/Notification';
 
 const Header = () => {
     const user = useSelector((state: RootState) => state.user.user);
+    const dispatch = useAppDispatch();
+    const { isLoading: isGettingNotifications } = useGetNotificationsQuery();
+    const { isLoading: isGettingConversations } = useGetConversationsQuery();
+    const conversations = useSelector((state: RootState) => state.side.conversations);
+    const notifications = useSelector((state: RootState) => state.side.notifications);
+
+    const notificationIsNotSeen = useMemo(() => {
+        return notifications.filter((item) => item.isSeen === false).length;
+    }, [notifications]);
+    const conversationsIsNotSeen = useMemo(() => {
+        return conversations.filter(
+            (item) => item?.latestMessage && !item?.latestMessage?.readBy.includes(user?.id as string),
+        );
+    }, [conversations, user?.id]);
+
+    // Join all conversation when start app
+    useEffect(() => {
+        if (conversations.length > 0) {
+            conversations.forEach((conversation) => socket.emit('joinRoom', conversation.id));
+        }
+    }, [conversations]);
+
+    useEffect(() => {
+        const handleNotificationReceived = (notification: Notification) => {
+            dispatch(addNotification(notification));
+        };
+        const handleMessageReceived = (message: Message) => {
+            dispatch(updateLastMessage(message));
+        };
+        socket.on('notification received', handleNotificationReceived);
+        socket.on('messageReceived', handleMessageReceived);
+
+        return () => {
+            socket.off('notification received', handleNotificationReceived);
+            socket.off('messageReceived', handleMessageReceived);
+        };
+    }, [dispatch]);
 
     return (
         <header className="sticky top-0 z-50 bg-white dark:bg-dark-450 dark:text-dark-100 flex justify-center py-2 px-10 transition-all">
@@ -49,13 +95,24 @@ const Header = () => {
             </nav>
 
             <div className="w-2/12 text-center flex items-center space-x-5 text-2xl justify-end mobile:hidden">
-                <IconBoxWithPopup icon={<FontAwesomeIcon icon={faBell} />} notification={3}>
-                    <NotifyBox />
-                </IconBoxWithPopup>
+                {isGettingNotifications ? (
+                    <Loading />
+                ) : (
+                    <IconBoxWithPopup icon={<FontAwesomeIcon icon={faBell} />} notification={notificationIsNotSeen}>
+                        <NotifyBox notifications={notifications} />
+                    </IconBoxWithPopup>
+                )}
 
-                <IconBoxWithPopup icon={<FontAwesomeIcon icon={faMessage} />} notification={3}>
-                    <Messagebar />
-                </IconBoxWithPopup>
+                {isGettingConversations ? (
+                    <Loading />
+                ) : (
+                    <IconBoxWithPopup
+                        icon={<FontAwesomeIcon icon={faMessage} />}
+                        notification={conversationsIsNotSeen.length}
+                    >
+                        <Messagebar />
+                    </IconBoxWithPopup>
+                )}
 
                 <IconBoxWithPopup icon={<FontAwesomeIcon icon={faGear} />}>
                     <SettingBox />

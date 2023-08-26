@@ -13,11 +13,10 @@ const IconBoxWithPopup = (props: Props) => {
     const [openPopup, setOpenPopup] = useState(false);
     const popupRef = useClickOutside<HTMLDivElement>(() => setOpenPopup(false));
     const classNames = twMerge('w-1/4 relative cursor-pointer hover:text-dark-350', className);
-
     return (
         <div ref={popupRef} className={classNames} onClick={() => setOpenPopup((prev) => !prev)}>
             {icon}
-            {notification && (
+            {!!notification && notification !== 0 && (
                 <span className="absolute top-0 right-0 text-white text-xs bg-orange-500 rounded-full w-4 h-4 flex justify-center items-center ">
                     {notification}
                 </span>

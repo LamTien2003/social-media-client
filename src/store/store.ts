@@ -5,11 +5,13 @@ import { setupListeners } from '@reduxjs/toolkit/query';
 
 import userReducer from './userSlice';
 import themeReducer from './themeSlice';
+import sideReducer from './sideSlice';
 
 const store = configureStore({
     reducer: {
         user: userReducer,
         theme: themeReducer,
+        side: sideReducer,
         [apiSlice.reducerPath]: apiSlice.reducer,
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(apiSlice.middleware),

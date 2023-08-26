@@ -10,7 +10,8 @@ import store from './store/store.ts';
 import { ToastContainer } from 'react-toastify';
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-    <React.StrictMode>
+    // <React.StrictMode>
+    <>
         <Provider store={store}>
             <Router>
                 <App />
@@ -28,5 +29,6 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
             pauseOnHover
             theme="light"
         />
-    </React.StrictMode>,
+    </>,
+    // </React.StrictMode>,
 );

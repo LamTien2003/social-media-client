@@ -14,9 +14,13 @@ import { useLogoutMutation } from '@/services/authApiSlice';
 import { removeToken } from '@/utils/utils';
 import { toast } from 'react-toastify';
 import Loading from '@/components/Loading/Loading';
+import { socket } from '@/services/socket';
+import MessageBox from '@/components/MessageBox/MessageBox';
 
 const DefaultLayout = () => {
     const theme = useSelector<RootState, InitialValue>((state) => state.theme);
+    const messageRoomJoined = useSelector((state: RootState) => state.side.messageRoomJoined);
+
     const currentUser = useSelector((state: RootState) => state.user.user);
     const [logout, { isLoading }] = useLogoutMutation();
     const navigate = useNavigate();
@@ -58,6 +62,7 @@ const DefaultLayout = () => {
                                     throw response;
                                 }
                                 removeToken();
+                                socket.disconnect();
                                 toast.success('Đăng xuất thành công');
                                 navigate('/auth');
                             } catch (err: any) {
@@ -78,6 +83,13 @@ const DefaultLayout = () => {
                 <div className={`ml-[280px] mt-[68px] text-center transition-all mobile:mx-auto `}>
                     {isLoading ? <Loading /> : <Outlet />}
                 </div>
+                {messageRoomJoined.length && (
+                    <div className="fixed bottom-0 right-[268px] w-auto h-[366px] flex justify-end space-x-4">
+                        {messageRoomJoined.map((item, index) => (
+                            <MessageBox key={index} conversationId={item} />
+                        ))}
+                    </div>
+                )}
             </div>
         </div>
     );

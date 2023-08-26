@@ -13,7 +13,7 @@ import { useEffect } from 'react';
 const Profile = () => {
     const { id } = useParams();
     const currentUser = useSelector((state: RootState) => state.user.user);
-    const { data, error, isLoading } = useGetUserQuery(id || skipToken);
+    const { data, error, isLoading, isFetching } = useGetUserQuery(id || skipToken);
     const user = data?.data?.data;
 
     useEffect(() => {
@@ -23,7 +23,7 @@ const Profile = () => {
     return (
         <div className="max-w-[960px] mx-auto ">
             {!error ? (
-                isLoading ? (
+                isLoading || isFetching ? (
                     <Loading />
                 ) : (
                     <>

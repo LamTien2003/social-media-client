@@ -16,8 +16,71 @@ import Admin from '@/page/Admin/Admin';
 import ManageUser from './page/Admin/components/ManageUser';
 import ManageBlog from './page/Admin/components/ManageBlog';
 import ProtectedRoutes from './layouts/auth/ProtectedRoutes';
+import { useCallback, useEffect } from 'react';
+import { socket } from './services/socket';
+import { toast } from 'react-toastify';
+import { useSelector } from 'react-redux';
+import { RootState, useAppDispatch } from './store/store';
+import { changeOnlineFriends, joinMessageRoom } from './store/sideSlice';
+
+import Notification from './type/Notification';
+import Message from './type/Message';
 
 function App() {
+    const user = useSelector((state: RootState) => state.user.user);
+    const messageRoomJoined = useSelector((state: RootState) => state.side.messageRoomJoined);
+    const dispatch = useAppDispatch();
+    const showPopupNotification = (notification: Notification) => {
+        toast(
+            <div className=" flex space-x-4">
+                <img src={notification.sender?.photo} alt="" className="w-10 h-10 rounded-full object-cover" />
+                <div className="flex-1">
+                    <span className="text-content-300 font-semibold mr-1">{`${notification.sender.firstName} ${notification.sender.lastName}`}</span>
+                    <span>
+                        {notification.type === 'reaction'
+                            ? 'vừa thả cảm xúc cho bài viết của bạn'
+                            : notification.content
+                            ? notification.content
+                            : 'vừa gửi cho bạn yêu cầu kết bạn'}
+                    </span>
+                </div>
+            </div>,
+        );
+    };
+    const sendGetOnlinesRequest = useCallback(() => {
+        if (user?.id) {
+            socket.emit('getOnlinesCurrently', user.id);
+        }
+    }, [user?.id]);
+
+    const getUsersOnline = useCallback(
+        (users: { userId: string; socketId: string }[]) => {
+            dispatch(changeOnlineFriends(users));
+        },
+        [dispatch],
+    );
+    const handleMessageReceived = useCallback(
+        (message: Message) => {
+            if (!messageRoomJoined.includes(message.conversation)) {
+                dispatch(joinMessageRoom(message.conversation));
+            }
+        },
+        [dispatch, messageRoomJoined],
+    );
+    useEffect(() => {
+        socket.on('notification received', showPopupNotification);
+        socket.on('getOnlines', sendGetOnlinesRequest);
+        socket.on('currentlyOnlines', getUsersOnline);
+        socket.on('messageReceived', handleMessageReceived);
+
+        return () => {
+            socket.off('notification received', showPopupNotification);
+            socket.off('getOnlines', sendGetOnlinesRequest);
+            socket.off('currentlyOnlines', getUsersOnline);
+            socket.off('messageReceived', handleMessageReceived);
+        };
+    }, [dispatch, getUsersOnline, handleMessageReceived, messageRoomJoined, sendGetOnlinesRequest]);
+
     return (
         <>
             <Routes>

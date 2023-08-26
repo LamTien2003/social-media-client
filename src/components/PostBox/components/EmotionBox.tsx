@@ -11,6 +11,7 @@ import { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store/store';
 import Loading from '@/components/Loading/Loading';
+import { socket } from '@/services/socket';
 
 const emotion = {
     like: (
@@ -80,10 +81,11 @@ interface EmotionBoxProps {
         };
         emotion: 'like' | 'haha' | 'sad' | 'angry' | 'wow';
     }[];
+    postedBy: { firstName: string; lastName: string; photo: string; id: string };
 }
 
 const EmotionBox = (props: EmotionBoxProps) => {
-    const { idPost, likeList } = props;
+    const { idPost, likeList, postedBy } = props;
     const currentUser = useSelector((state: RootState) => state.user.user);
 
     const [reaction, { isLoading }] = useReactionPostMutation();
@@ -94,6 +96,16 @@ const EmotionBox = (props: EmotionBoxProps) => {
             if (response.status !== 200 || response?.data?.status !== 'success') {
                 throw response;
             }
+            socket.emit('notification sending', {
+                sender: currentUser,
+                receiver: postedBy,
+                type: 'reaction',
+                entityId: idPost,
+                isSeen: false,
+                createdAt: Date.now(),
+                updatedAt: Date.now(),
+            });
+            socket.emit('test');
         } catch (err: any) {
             toast.warn(err);
         }

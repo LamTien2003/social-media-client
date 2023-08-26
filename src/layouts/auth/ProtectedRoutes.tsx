@@ -1,4 +1,4 @@
-import { useLayoutEffect } from 'react';
+import { useEffect, useLayoutEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useGetCurrentUserQuery } from '@/services/userApiSlice';
 import { setCurrentUser } from '@/store/userSlice';
@@ -6,6 +6,8 @@ import { Navigate, Outlet } from 'react-router-dom';
 import { RootState } from '@/store/store';
 import User from '@/type/User';
 import { removeToken } from '@/utils/utils';
+import { socket } from '@/services/socket';
+import { changeOnlineFriends } from '@/store/sideSlice';
 
 const ProtectedRoutes = () => {
     const user = useSelector((state: RootState) => state.user.user);
@@ -14,14 +16,16 @@ const ProtectedRoutes = () => {
     });
     const dispatch = useDispatch();
 
-    useLayoutEffect(() => {
-        console.log(`fetch: ${isFetching}`);
-        console.log(`Load: ${isLoading}`);
+    useEffect(() => {
+        socket.on('connected', (users) => dispatch(changeOnlineFriends(users)));
+    }, [dispatch]);
 
+    useLayoutEffect(() => {
         if (data?.data?.data) {
-            console.log(data?.data?.data);
             const user = data.data.data;
             dispatch(setCurrentUser(user as User));
+            socket.connect();
+            socket.emit('join', user.id);
         }
         if (isError && !isFetching && !isLoading) {
             alert((error as any)?.data?.msg);

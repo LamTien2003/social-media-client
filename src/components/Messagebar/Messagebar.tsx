@@ -1,7 +1,12 @@
-import images from '@/assets/images';
-import { NavLink } from 'react-router-dom';
 import Search from '@/components/Search/Search';
 import { motion } from 'framer-motion';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/store/store';
+import { useMemo } from 'react';
+
+import { useGetConversationsQuery } from '@/services/conversationApiSlice';
+import Loading from '../Loading/Loading';
+import MessagebarItem from './components/MessagebarItem';
 
 interface Props {
     style?: React.CSSProperties;
@@ -9,6 +14,31 @@ interface Props {
 
 const Messagebar = (props: Props) => {
     const { style } = props;
+    // It will auto dispatch in extraReducer when matchFullfiled
+    const { isLoading } = useGetConversationsQuery();
+    const conversations = useSelector((state: RootState) => state.side.conversations);
+    const onlineFriends = useSelector((state: RootState) => state.side.onlineFriends);
+
+    const conversationList = useMemo(() => {
+        if (!conversations) return [];
+
+        const conversationsWithOnlineStatus = conversations.map((conversation) => {
+            const isOnline = conversation.members.some((member) =>
+                onlineFriends.some((friend) => friend.userId === member.id),
+            );
+            return { ...conversation, isOnline };
+        });
+
+        return conversationsWithOnlineStatus?.sort((a, b) => Number(b.isOnline) - Number(a.isOnline));
+    }, [conversations, onlineFriends]);
+
+    // const friendList = useMemo(() => {
+    //     const users = user?.friends.map((friend) => {
+    //         const isOnline = onlineFriends.some((onlineFriend) => onlineFriend.userId === friend.id);
+    //         return { ...friend, isOnline };
+    //     });
+    //     return users?.sort((a, b) => Number(b.isOnline) - Number(a.isOnline));
+    // }, [onlineFriends, user?.friends]);
     return (
         <motion.div
             animate={{ x: 0, opacity: 1 }}
@@ -20,13 +50,11 @@ const Messagebar = (props: Props) => {
             <Search className="mb-2 py-1" />
             <h3 className="text-xs font-bold text-content-200 mb-4">Contacts</h3>
             <div className="flex flex-col items-start">
-                {[...Array(20)].map((_, index) => (
-                    <NavLink to="" className="flex items-center py-2 px-3 my-1" key={index}>
-                        <img src={images.avatar} alt="" className="rounded-full w-1/5" />
-                        <span className="text-sm font-bold text-dark-500 dark:text-content-200 ml-4"> Lâm Tiến</span>
-                        <span className="rounded-full bg-green-500 w-2 h-2 ml-10"></span>
-                    </NavLink>
-                ))}
+                {isLoading ? (
+                    <Loading />
+                ) : (
+                    conversationList?.map((item) => <MessagebarItem data={item} key={item.id} />)
+                )}
             </div>
         </motion.div>
     );
