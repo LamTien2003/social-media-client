@@ -6,6 +6,7 @@ import Loading from '@/components/Loading/Loading';
 import images from '@/assets/images';
 import { useRegisterMutation } from '@/services/authApiSlice';
 import { useNavigate } from 'react-router-dom';
+import { setToken } from '@/utils/utils';
 
 interface RegisterProps {
     className?: string;
@@ -25,19 +26,25 @@ const Register = (props: RegisterProps) => {
             passwordConfirm: '',
         },
         validationSchema: yup.object({
-            firstName: yup.string().required('Không được để trống').max(30, 'Không được vượt quá 30 kí tự'),
-            lastName: yup.string().required('Không được để trống').max(30, 'Không được vượt quá 30 kí tự'),
+            firstName: yup
+                .string()
+                .required('FirstName không được để trống')
+                .max(30, 'FirstName không được vượt quá 30 kí tự'),
+            lastName: yup
+                .string()
+                .required('LastName không được để trống')
+                .max(30, 'LastName không được vượt quá 30 kí tự'),
             email: yup
                 .string()
-                .required('Không được để trống')
-                .max(50, 'Không được vượt quá 50 kí tự')
+                .required('Email không được để trống')
+                .max(50, 'Email không được vượt quá 50 kí tự')
                 .email('Email không đúng'),
-            password: yup.string().required('Không được để trống').min(8, 'Mật khẩu phải lớn hơn 8 kí tự'),
+            password: yup.string().required('Mật khẩu không được để trống').min(8, 'Mật khẩu phải lớn hơn 8 kí tự'),
             passwordConfirm: yup
                 .string()
-                .required('Không được để trống')
-                .min(8, 'Mật khẩu phải lớn hơn 8 kí tự')
-                .oneOf([yup.ref('password')], 'Mật khẩu không trùng khớp'),
+                .required('Mật khẩu xác nhận không được để trống')
+                .min(8, 'Mật khẩu xác nhận phải lớn hơn 8 kí tự')
+                .oneOf([yup.ref('password')], 'Mật khẩu xác nhận không trùng khớp'),
         }),
 
         onSubmit: async (values) => {
@@ -54,6 +61,7 @@ const Register = (props: RegisterProps) => {
                     throw response;
                 }
                 toast.success('Đăng ký thành công');
+                setToken(response?.data?.accessToken as string);
                 navigate('/');
             } catch (err: any) {
                 toast.error(err?.data.msg);
@@ -63,7 +71,8 @@ const Register = (props: RegisterProps) => {
 
     const handleSubmitForm = () => {
         if (!formik.isValid) {
-            return toast.warn('Vui lòng nhập chính xác thông tin');
+            const errors = Object.values(formik.errors).join(', ');
+            return toast.warn('Vui lòng nhập chính xác thông tin ' + errors);
         }
         formik.handleSubmit();
     };
