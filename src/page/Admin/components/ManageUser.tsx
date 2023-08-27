@@ -9,7 +9,7 @@ import Loading from '@/components/Loading/Loading';
 import Container from '@/components/Container/Container';
 
 const ManageUser: React.FC = () => {
-    const { data, isLoading, error } = useGetUsersQuery();
+    const { data, isLoading, error } = useGetUsersQuery({});
     const [selectedUser, setSelectedUser] = useState<number>(0);
 
     const currentUser = useMemo(() => {
