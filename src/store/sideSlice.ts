@@ -65,6 +65,14 @@ const sideSlice = createSlice({
         addNotification: (state, action: PayloadAction<Notification>) => {
             state.notifications = [...state.notifications, action.payload];
         },
+        changeSeenNotification: (state, action: PayloadAction<string>) => {
+            state.notifications = [...state.notifications].map((item) => {
+                if (item.id === action.payload) {
+                    return { ...item, isSeen: true };
+                }
+                return item;
+            });
+        },
     },
     extraReducers: (builder) => {
         builder.addMatcher(conversationApi.endpoints.getConversations.matchFulfilled, (state, { payload }) => {
@@ -85,5 +93,6 @@ export const {
     setNotifications,
     addNotification,
     seenConversation,
+    changeSeenNotification,
 } = sideSlice.actions;
 export default sideSlice.reducer;

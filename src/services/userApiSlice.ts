@@ -25,8 +25,14 @@ export const userApi = apiSlice.injectEndpoints({
                 return [{ type: 'Users' as const, id: 'SUGGEST' }];
             },
         }),
-        getUsers: builder.query<ResponseApi<User[]>, void>({
-            query: () => `user`,
+        getUsers: builder.query<ResponseApi<User[]>, { q?: string }>({
+            query: (arg) => {
+                const { q } = arg;
+                return {
+                    url: 'user/',
+                    params: { q },
+                };
+            },
             providesTags(result) {
                 if (result?.data?.data) {
                     const final = [

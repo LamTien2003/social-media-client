@@ -20,6 +20,7 @@ import User from '@/type/User';
 import Tippy from '@tippyjs/react';
 import Popup from '@/components/Popup/Popup';
 import { dataUrlToFileUsingFetch } from '@/utils/utils';
+import { socket } from '@/services/socket';
 
 interface Props {
     currentUser: User;
@@ -103,6 +104,15 @@ const HeadBox = (props: Props) => {
             if (response.status !== 200 || response?.data?.status !== 'success') {
                 throw response;
             }
+            socket.emit('notification sending', {
+                sender: currentUser,
+                receiver: user,
+                type: 'friend',
+                entityId: currentUser?.id,
+                isSeen: false,
+                createdAt: Date.now(),
+                updatedAt: Date.now(),
+            });
             toast.success('Gửi lời mời kết bạn thành công');
         } catch (err: any) {
             toast.warn(err.msg);

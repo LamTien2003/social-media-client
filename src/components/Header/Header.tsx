@@ -12,13 +12,17 @@ import { useSelector } from 'react-redux';
 import { RootState, useAppDispatch } from '@/store/store';
 
 import { useGetNotificationsQuery } from '@/services/notificationApiSlice';
-import { useEffect, useMemo } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { socket } from '@/services/socket';
 import { useGetConversationsQuery } from '@/services/conversationApiSlice';
 import Message from '@/type/Message';
 import { addNotification, updateLastMessage } from '@/store/sideSlice';
 import Loading from '../Loading/Loading';
 import Notification from '@/type/Notification';
+import SearchResultBox from './components/SearchResultBox';
+import Tippy from '@tippyjs/react/headless';
+import { userApi } from '@/services/userApiSlice';
+import User from '@/type/User';
 
 const Header = () => {
     const user = useSelector((state: RootState) => state.user.user);
@@ -27,6 +31,20 @@ const Header = () => {
     const { isLoading: isGettingConversations } = useGetConversationsQuery();
     const conversations = useSelector((state: RootState) => state.side.conversations);
     const notifications = useSelector((state: RootState) => state.side.notifications);
+    const [searchResult, setSearchResult] = useState<User[]>([]);
+    const [focusInput, setFocusInput] = useState(false);
+    const [triggerSearch] = userApi.endpoints.getUsers.useLazyQuery();
+
+    const handleSearch = useCallback(
+        async (value: string) => {
+            const response = await triggerSearch({ q: value }).unwrap();
+            if (response.status !== 200 || response?.data?.status !== 'success') {
+                throw response;
+            }
+            setSearchResult(response.data.data as User[]);
+        },
+        [triggerSearch],
+    );
 
     const notificationIsNotSeen = useMemo(() => {
         return notifications.filter((item) => item.isSeen === false).length;
@@ -46,7 +64,6 @@ const Header = () => {
 
     useEffect(() => {
         const handleNotificationReceived = (notification: Notification) => {
-            console.log(notification);
             dispatch(addNotification(notification));
         };
         const handleMessageReceived = (message: Message) => {
@@ -65,7 +82,19 @@ const Header = () => {
         <header className="sticky top-0 z-50 bg-white dark:bg-dark-450 dark:text-dark-100 flex justify-center py-2 px-10 transition-all">
             <div className="w-3/12 flex items-center space-x-10 mobile:hidden">
                 <img src={images.LogoDark} alt="Logo" className="w-1/12 object-cove " />
-                <Search />
+
+                <Tippy
+                    render={(attrs) => <SearchResultBox data={searchResult} {...attrs} />}
+                    interactive
+                    visible={focusInput && searchResult.length > 0}
+                    onClickOutside={() => {
+                        setFocusInput(false);
+                    }}
+                >
+                    <div className="flex-1">
+                        <Search handleFocus={() => setFocusInput(true)} handleSearch={handleSearch} />
+                    </div>
+                </Tippy>
             </div>
 
             <nav className="flex-1 text-center flex items-center justify-center space-x-4">

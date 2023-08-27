@@ -9,7 +9,19 @@ export const notificationApi = apiSlice.injectEndpoints({
         getNotifications: builder.query<ResponseApi<Notification[]>, void>({
             query: () => `notification`,
         }),
+        seenNotification: builder.mutation<ResponseApi<Notification>, string>({
+            query(notificationId) {
+                try {
+                    return {
+                        url: `notification/seen/${notificationId}`,
+                        method: 'PATCH',
+                    };
+                } catch (error: any) {
+                    throw error.message;
+                }
+            },
+        }),
     }),
 });
 
-export const { useGetNotificationsQuery } = notificationApi;
+export const { useGetNotificationsQuery, useSeenNotificationMutation } = notificationApi;

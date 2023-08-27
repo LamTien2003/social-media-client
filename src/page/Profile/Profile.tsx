@@ -13,7 +13,9 @@ import { useEffect } from 'react';
 const Profile = () => {
     const { id } = useParams();
     const currentUser = useSelector((state: RootState) => state.user.user);
-    const { data, error, isLoading, isFetching } = useGetUserQuery(id || skipToken);
+    const { data, error, isLoading, isFetching } = useGetUserQuery(id || skipToken, {
+        refetchOnMountOrArgChange: true,
+    });
     const user = data?.data?.data;
 
     useEffect(() => {

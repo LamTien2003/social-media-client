@@ -4,12 +4,12 @@ import icons from '@/assets/icons';
 import { useGetSuggestFriendsQuery, useSendFriendRequestMutation } from '@/services/userApiSlice';
 import Loading from '@/components/Loading/Loading';
 import { toast } from 'react-toastify';
-// import { socket } from '@/services/socket';
-// import { useSelector } from 'react-redux';
-// import { RootState } from '@/store/store';
+import { socket } from '@/services/socket';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/store/store';
 
 const SuggestFrirendBox = () => {
-    // const currentUser = useSelector((state: RootState) => state.user.user);
+    const currentUser = useSelector((state: RootState) => state.user.user);
     const { data, isLoading } = useGetSuggestFriendsQuery();
     const [sendFriendRequest, { isLoading: isSending }] = useSendFriendRequestMutation();
 
@@ -25,17 +25,16 @@ const SuggestFrirendBox = () => {
             if (response.status !== 200 || response?.data?.status !== 'success') {
                 throw response;
             }
+            socket.emit('notification sending', {
+                sender: currentUser,
+                receiver: user,
+                type: 'friend',
+                entityId: currentUser?.id,
+                isSeen: false,
+                createdAt: Date.now(),
+                updatedAt: Date.now(),
+            });
             toast.success('Đã gửi lời mời kết bạn');
-
-            // socket.emit('notification sending', {
-            //     sender: currentUser,
-            //     receiver: user,
-            //     type: 'friend',
-            //     entityId: currentUser?.id,
-            //     isSeen: false,
-            //     createdAt: Date.now(),
-            //     updatedAt: Date.now(),
-            // });
         } catch (err: any) {
             toast.warn(err.msg);
         }
