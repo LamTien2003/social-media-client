@@ -124,10 +124,11 @@ const MessageBox = (props: Props) => {
             socket.off('stopTyping', handleStopTypingUsers);
         };
     }, [handleStopTypingUsers, handleTypingUsers]);
+
     return (
         <div
             className={`relative w-[320px] h-full flex flex-col justify-evenly bg-white shadow-lg rounded-md ${
-                !messages[0]?.readBy?.includes(currentUser?.id as string) && 'bg-red-50 shadow-red-300'
+                !messages[0]?.readBy?.includes(currentUser?.id as string) && 'bg-red-50 shadow-red-300 cursor-pointer'
             }`}
             ref={thisBox}
         >

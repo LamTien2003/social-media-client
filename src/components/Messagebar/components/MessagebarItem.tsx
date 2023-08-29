@@ -20,7 +20,11 @@ const MessagebarItem = (props: Props) => {
     return (
         <div className="w-full relative flex items-center justify-evenly my-4" onClick={() => handleClickItem(data.id)}>
             <div className="flex items-center space-x-2">
-                <img src={data.members[0].photo} alt="" className="rounded-full w-1/5" />
+                <img
+                    src={data.members.find((member) => member.id !== user?.id)?.photo}
+                    alt=""
+                    className="rounded-full w-1/5"
+                />
                 <span className="flex-1 text-xs text-left font-bold text-dark-500 dark:text-content-200 ">
                     {data?.name
                         ? data.name

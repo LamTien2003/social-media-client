@@ -5,7 +5,7 @@ import { RootState } from '@/store/store';
 import { InitialValue } from '@/store/themeSlice';
 import { useSelector } from 'react-redux';
 
-import { Outlet, useNavigate } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGear, faHome, faMessage, faSignOut, faUser, faUserFriends } from '@fortawesome/free-solid-svg-icons';
@@ -23,7 +23,6 @@ const DefaultLayout = () => {
 
     const currentUser = useSelector((state: RootState) => state.user.user);
     const [logout, { isLoading }] = useLogoutMutation();
-    const navigate = useNavigate();
 
     const sidebarOption = useMemo(() => {
         return [
@@ -64,7 +63,7 @@ const DefaultLayout = () => {
                                 removeToken();
                                 socket.disconnect();
                                 toast.success('Đăng xuất thành công');
-                                navigate('/auth');
+                                window.location.href = '/auth';
                             } catch (err: any) {
                                 toast.error(err?.data.msg);
                             }
@@ -73,7 +72,7 @@ const DefaultLayout = () => {
                 ],
             },
         ];
-    }, [currentUser?.id, currentUser?.role, logout, navigate]);
+    }, [currentUser?.id, currentUser?.role, logout]);
 
     return (
         <div className={`flex flex-col mobile:flex-col-reverse ${theme.isDark && 'dark'}`}>
