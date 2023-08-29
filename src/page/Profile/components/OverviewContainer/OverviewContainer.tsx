@@ -43,7 +43,7 @@ const OverviewContainer = () => {
                 {posts?.length ? (
                     posts?.map((item, index) => <PostBox key={index} data={item} />)
                 ) : (
-                    <Container classNames="font-semibold">Không có bài viết nào</Container>
+                    <Container classNames="font-semibold dark:text-white">Không có bài viết nào</Container>
                 )}
             </div>
         </div>

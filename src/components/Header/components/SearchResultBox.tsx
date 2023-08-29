@@ -9,7 +9,7 @@ const SearchResultBox = (props: Props) => {
     const currentUser = useSelector((state: RootState) => state.user.user);
     const { data } = props;
     return (
-        <div className=" shadow-xl rounded-lg w-[360px] min-h-[200px] bg-white">
+        <div className=" shadow-xl rounded-lg w-[360px] min-h-[100px] max-h-[200px] overflow-y-scroll bg-white">
             <h5 className="text-xs text-content-300 font-bold p-4 ">Tài khoản</h5>
             {data.map((item) => (
                 <NavLink

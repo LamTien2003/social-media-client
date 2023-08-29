@@ -1,24 +1,43 @@
 import Container from '@/components/Container/Container';
 import Loading from '@/components/Loading/Loading';
+import { socket } from '@/services/socket';
 import { useAcceptFriendMutation } from '@/services/userApiSlice';
 import { RootState } from '@/store/store';
 import { useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
+interface PendingUser {
+    id: string;
+    firstName: string;
+    lastName: string;
+    photo: string;
+    commonFriends: number;
+}
+
 const FriendRequestBox = () => {
-    const user = useSelector((state: RootState) => state.user.user);
+    const currentUser = useSelector((state: RootState) => state.user.user);
     const [acceptFriend, { isLoading }] = useAcceptFriendMutation();
 
-    const handleAcceptFriend = async (id: string) => {
+    const handleAcceptFriend = async (user: PendingUser) => {
         try {
             if (isLoading) {
                 return toast.error('Hành động đang được thực hiện, vui lòng đợi');
             }
-            const response = await acceptFriend(id).unwrap();
+            const response = await acceptFriend(user.id).unwrap();
             if (response.status !== 200 || response?.data?.status !== 'success') {
                 throw response;
             }
+            socket.emit('notification sending', {
+                sender: currentUser,
+                receiver: user,
+                type: 'friend',
+                content: 'đã chấp nhận lời mời kết bạn',
+                entityId: currentUser?.id,
+                isSeen: false,
+                createdAt: Date.now(),
+                updatedAt: Date.now(),
+            });
             toast.success('Kết bạn thành công');
         } catch (err: any) {
             toast.warn(err.msg);
@@ -33,7 +52,7 @@ const FriendRequestBox = () => {
                 </NavLink>
             </div>
             <div className="flex flex-col items-start justify-center my-4">
-                {user?.pending.map((item, index) => (
+                {currentUser?.pending.map((item, index) => (
                     <NavLink
                         to={`/profile/${item.id}`}
                         className="flex flex-col items-start justify-center space-y-4 my-3 px-6 w-full"
@@ -54,7 +73,7 @@ const FriendRequestBox = () => {
                                 onClick={(e) => {
                                     e.preventDefault();
                                     e.stopPropagation();
-                                    handleAcceptFriend(item?.id);
+                                    handleAcceptFriend(item);
                                 }}
                             >
                                 {isLoading ? <Loading /> : 'Xác nhận'}

@@ -60,6 +60,7 @@ const CommentBox = (props: CommentBoxProps) => {
             setFile(null);
             setText('');
             setPreviewImage('');
+
             toast.success(response?.data?.message);
         } catch (err: any) {
             toast.warn(err?.msg);
@@ -94,7 +95,7 @@ const CommentBox = (props: CommentBoxProps) => {
                         </span>
 
                         <div>
-                            <label htmlFor="photoComment">
+                            <label htmlFor="photoComment" className="cursor-pointer">
                                 <FontAwesomeIcon icon={faUpload} className="text-content-300" />
                             </label>
                             <input

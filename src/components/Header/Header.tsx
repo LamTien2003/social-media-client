@@ -111,16 +111,10 @@ const Header = () => {
                     <FontAwesomeIcon icon={faUserFriends} />
                 </NavLink>
                 <NavLink
-                    to="/profile/123"
+                    to={`/profile/${user?.id}`}
                     className=" text-gray-400 dark:text-white py-3 px-14 rounded-md text-xl hover:text-white hover:bg-dark-500 dark:hover:bg-dark-350"
                 >
                     <FontAwesomeIcon icon={faUser} />
-                </NavLink>
-                <NavLink
-                    to="/admin"
-                    className=" text-gray-400 dark:text-white py-3 px-14 rounded-md text-xl hover:text-white hover:bg-dark-500 dark:hover:bg-dark-350"
-                >
-                    <FontAwesomeIcon icon={faMessage} />
                 </NavLink>
             </nav>
 

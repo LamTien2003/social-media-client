@@ -25,11 +25,14 @@ import { changeOnlineFriends, joinMessageRoom } from './store/sideSlice';
 
 import Notification from './type/Notification';
 import Message from './type/Message';
+import { conversationApi } from './services/conversationApiSlice';
 
 function App() {
     const user = useSelector((state: RootState) => state.user.user);
     const messageRoomJoined = useSelector((state: RootState) => state.side.messageRoomJoined);
+    const [triggerGetConversations] = conversationApi.endpoints.getConversations.useLazyQuery();
     const dispatch = useAppDispatch();
+
     const showPopupNotification = (notification: Notification) => {
         toast(
             <div className=" flex space-x-4">
@@ -47,6 +50,14 @@ function App() {
             </div>,
         );
     };
+
+    const notificationRecivedHandle = useCallback(
+        (notification: Notification) => {
+            triggerGetConversations();
+            showPopupNotification(notification);
+        },
+        [triggerGetConversations],
+    );
     const sendGetOnlinesRequest = useCallback(() => {
         if (user?.id) {
             socket.emit('getOnlinesCurrently', user.id);
@@ -68,18 +79,25 @@ function App() {
         [dispatch, messageRoomJoined],
     );
     useEffect(() => {
-        socket.on('notification received', showPopupNotification);
+        socket.on('notification received', notificationRecivedHandle);
         socket.on('getOnlines', sendGetOnlinesRequest);
         socket.on('currentlyOnlines', getUsersOnline);
         socket.on('messageReceived', handleMessageReceived);
 
         return () => {
-            socket.off('notification received', showPopupNotification);
+            socket.off('notification received', notificationRecivedHandle);
             socket.off('getOnlines', sendGetOnlinesRequest);
             socket.off('currentlyOnlines', getUsersOnline);
             socket.off('messageReceived', handleMessageReceived);
         };
-    }, [dispatch, getUsersOnline, handleMessageReceived, messageRoomJoined, sendGetOnlinesRequest]);
+    }, [
+        dispatch,
+        getUsersOnline,
+        handleMessageReceived,
+        messageRoomJoined,
+        notificationRecivedHandle,
+        sendGetOnlinesRequest,
+    ]);
 
     return (
         <>

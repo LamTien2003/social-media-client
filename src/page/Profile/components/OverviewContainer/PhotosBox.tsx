@@ -22,7 +22,9 @@ const PhotosBox = (props: Props) => {
                         <img src={photo} alt="" className="w-full max-h-[150px] object-cover rounded-md" />
                     </div>
                 ))}
-                {!listImage.length && <div className="w-full text-center font-medium">Không có ảnh</div>}
+                {!listImage.length && (
+                    <div className="w-full text-center font-medium dark:text-white">Không có ảnh</div>
+                )}
             </div>
             <button className="bg-content-200 w-6/12 mx-auto p-2 rounded-full text-xs font-semibold mb-">
                 Xem thêm

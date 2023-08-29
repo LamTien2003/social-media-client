@@ -84,6 +84,7 @@ export const userApi = apiSlice.injectEndpoints({
                     return [
                         { type: 'Users', id: body },
                         { type: 'Users', id: 'CURRENT' },
+                        { type: 'Conversations', id: 'LIST' },
                     ];
                 }
             },

@@ -5,7 +5,8 @@ import type { BaseQueryFn, FetchArgs, FetchBaseQueryError } from '@reduxjs/toolk
 import { ResponseApi } from '@/type/Response';
 import { Mutex } from 'async-mutex';
 
-const urlProduction = 'https://social-media-server-d92z.onrender.com';
+const URL =
+    process.env.NODE_ENV === 'production' ? 'https://social-media-server-d92z.onrender.com' : 'http://localhost:3000';
 // const urlLocalhost = 'http://127.0.0.1:3000/';
 
 // Using for fix mutiple call refresh token
@@ -13,7 +14,7 @@ const mutex = new Mutex();
 // maxRetries: 5 is the default, and can be omitted. Shown for documentation purposes.
 
 const baseQuery = fetchBaseQuery({
-    baseUrl: urlProduction,
+    baseUrl: URL,
     prepareHeaders(headers, { getState }) {
         const token = (getState() as RootState).user.accessToken || getToken();
         if (token) {
@@ -78,7 +79,7 @@ const staggeredBaseQuery = retry(baseQueryWithReauth, {
 
 export const apiSlice = createApi({
     reducerPath: 'api',
-    tagTypes: ['Posts', 'Users', 'Reports'],
+    tagTypes: ['Posts', 'Users', 'Reports', 'Conversations'],
     baseQuery: staggeredBaseQuery,
 
     endpoints: (_builder) => ({}),

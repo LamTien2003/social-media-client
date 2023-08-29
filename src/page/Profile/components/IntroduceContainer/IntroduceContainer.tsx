@@ -110,7 +110,7 @@ const IntroduceContainer = () => {
                 <Container>
                     <h5 className="text-sm font-bold dark:text-white">Thông tin tài khoản</h5>
                     <div className="flex flex-col mt-4">
-                        <div className="flex items-center space-x-4 px-4 py-2 text-sm font-semibold rounded-lg">
+                        <div className="flex items-center space-x-4 px-4 py-2 text-sm font-semibold rounded-lg dark:text-light-300">
                             <span>Họ: </span>
                             {!isEditFirstName ? (
                                 <span>{firstName} </span>
@@ -127,7 +127,7 @@ const IntroduceContainer = () => {
                                 <FontAwesomeIcon icon={faEdit} />
                             </span>
                         </div>
-                        <div className="flex items-center space-x-4 p-4 text-sm font-semibold rounded-lg">
+                        <div className="flex items-center space-x-4 p-4 text-sm font-semibold rounded-lg dark:text-light-300">
                             <span>Tên: </span>
                             {!isEditLastName ? (
                                 <span>{lastName} </span>
@@ -144,7 +144,7 @@ const IntroduceContainer = () => {
                                 <FontAwesomeIcon icon={faEdit} />
                             </span>
                         </div>
-                        <div className="flex items-center space-x-4 p-4 text-sm font-semibold rounded-lg">
+                        <div className="flex items-center space-x-4 p-4 text-sm font-semibold rounded-lg dark:text-light-300">
                             <span>Nơi sinh sống: </span>
                             {!isEditLocation ? (
                                 <span>{location} </span>
@@ -161,7 +161,7 @@ const IntroduceContainer = () => {
                                 <FontAwesomeIcon icon={faEdit} />
                             </span>
                         </div>
-                        <div className="flex items-center space-x-4 p-4 text-sm font-semibold rounded-lg">
+                        <div className="flex items-center space-x-4 p-4 text-sm font-semibold rounded-lg dark:text-light-300">
                             <span>Nghề nghiệp: </span>
                             {!isEditOccupation ? (
                                 <span>{occupation} </span>

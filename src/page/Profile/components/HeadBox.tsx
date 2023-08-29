@@ -82,6 +82,16 @@ const HeadBox = (props: Props) => {
             if (response.status !== 200 || response?.data?.status !== 'success') {
                 throw response;
             }
+            socket.emit('notification sending', {
+                sender: currentUser,
+                receiver: user,
+                type: 'friend',
+                content: 'đã chấp nhận lời mời kết bạn',
+                entityId: currentUser?.id,
+                isSeen: false,
+                createdAt: Date.now(),
+                updatedAt: Date.now(),
+            });
             toast.success('Kết bạn thành công');
         } catch (err: any) {
             toast.warn(err.msg);
@@ -108,6 +118,7 @@ const HeadBox = (props: Props) => {
                 sender: currentUser,
                 receiver: user,
                 type: 'friend',
+                content: 'đã chấp nhận lời mời kết bạn',
                 entityId: currentUser?.id,
                 isSeen: false,
                 createdAt: Date.now(),
