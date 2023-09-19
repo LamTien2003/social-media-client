@@ -16,8 +16,8 @@ const mutex = new Mutex();
 const baseQuery = fetchBaseQuery({
     baseUrl: URL,
     prepareHeaders(headers, { getState }) {
-        headers.set('Access-Control-Allow-Origin', '*');
-        headers.set('Access-Control-Allow-Methods', 'GET,POST,PATCH,PUT,DELETE,HEAD,OPTIONS');
+        // headers.set('Access-Control-Allow-Origin', '*');
+        // headers.set('Access-Control-Allow-Methods', 'GET,POST,PATCH,PUT,DELETE,HEAD,OPTIONS');
 
         const token = (getState() as RootState).user.accessToken || getToken();
         if (token) {
