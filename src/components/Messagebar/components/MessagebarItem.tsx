@@ -30,7 +30,7 @@ const MessagebarItem = (props: Props) => {
                         ? data.name
                         : data.members
                               .map((member) =>
-                                  member.id !== user?.id ? `${member.firstName} ${member.lastName}` : null,
+                                  member.id !== user?.id ? `${member?.firstName} ${member?.lastName}` : null,
                               )
                               .filter((item) => item !== null)
                               .join(', ')}

@@ -35,11 +35,11 @@ const ManageUser: React.FC = () => {
                                         }`}
                                     >
                                         <img
-                                            src={item.photo}
+                                            src={item?.photo}
                                             alt=""
                                             className="w-14 h-14 rounded-full object-cover mb-2"
                                         />
-                                        <h4 className="text-sm font-bold">{`${item.firstName} ${item.lastName}`}</h4>
+                                        <h4 className="text-sm font-bold">{`${item?.firstName} ${item?.lastName}`}</h4>
                                         <span className="text-xs font-semibold text-content-100">({item.email})</span>
                                         <div className="flex flex-col items-center space-y-2 mt-4">
                                             <span className="text-xs font-semibold text-content-300">

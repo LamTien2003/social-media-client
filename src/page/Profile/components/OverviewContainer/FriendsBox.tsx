@@ -28,7 +28,7 @@ const FriendsBox = (props: Props) => {
                 {listFriends?.slice(0, 4).map((item, index) => (
                     <NavLink to={`/profile/${item.id}`} className="w-1/2 p-1 text-left" key={index}>
                         <img src={item.photo} alt="" className="w-full h-[150px] object-cover rounded-md" />
-                        <span className="text-xs font-semibold text-left px-1 dark:text-white">{`${item.firstName} ${item.lastName}`}</span>
+                        <span className="text-xs font-semibold text-left px-1 dark:text-white">{`${item?.firstName} ${item?.lastName}`}</span>
                     </NavLink>
                 ))}
                 {!listFriends?.length && <div className="w-full text-center font-medium">Không có bạn bè</div>}

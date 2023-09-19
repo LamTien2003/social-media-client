@@ -18,6 +18,7 @@ const Login = (props: LoginProps) => {
     const navigate = useNavigate();
 
     const [login, { isLoading }] = useLoginMutation();
+
     const formik = useFormik({
         initialValues: {
             email: '',
@@ -58,6 +59,29 @@ const Login = (props: LoginProps) => {
             return toast.warn('Vui lòng nhập chính xác thông tin');
         }
         formik.handleSubmit();
+    };
+
+    const handleLoginWithGoogle = async () => {
+        try {
+            let timer: NodeJS.Timeout | null = null;
+            const URLLogin = `${
+                import.meta.env.PROD ? import.meta.env.VITE_URL_PRODUCTION : import.meta.env.VITE_URL_DEVELOPMENT
+            }/auth/loginGoogle`;
+            const newWindow = window.open(URLLogin, '_blank', 'width=500,height=600');
+
+            // Timer every 5s to check if we have success login
+            if (newWindow) {
+                timer = setInterval(() => {
+                    // If login seccess, refresh to home page to check login and call refreshToken => get User
+                    if (newWindow.closed) {
+                        timer && clearInterval(timer);
+                        window.location.href = '/';
+                    }
+                }, 500);
+            }
+        } catch (err: any) {
+            toast.error(err?.data?.msg);
+        }
     };
 
     return (
@@ -104,10 +128,19 @@ const Login = (props: LoginProps) => {
 
                 <button
                     type="submit"
-                    className="w-1/2 px-2 py-3 bg-blue-500 rounded-full text-white font-fold hover:opacity-80 transition-all"
+                    className="w-1/2 px-2 py-3 bg-blue-500 rounded-full text-white font-bold hover:opacity-80 transition-all"
                     onClick={handleSubmitForm}
                 >
                     {isLoading ? <Loading /> : 'Đăng nhập'}
+                </button>
+
+                <button
+                    type="submit"
+                    className="w-1/2 px-2 py-3 flex items-center justify-center bg-white text-black font-bold rounded-full hover:opacity-80 transition-all "
+                    onClick={handleLoginWithGoogle}
+                >
+                    <img src={images.googleLogo} alt="" className="w-5 mr-4" />
+                    Đăng nhập với Google
                 </button>
 
                 <button
@@ -120,7 +153,7 @@ const Login = (props: LoginProps) => {
             </div>
 
             <div className="w-20 h-20 p-4 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-blue-light rounded-full border-8 border-dark-300 rotate-[30deg]">
-                <img src={images.LogoDark} alt="" className=" w-full" />
+                <img src={images.LogoDark} alt="" className=" w-full bg-transparent" />
             </div>
         </>
     );

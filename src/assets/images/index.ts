@@ -10,6 +10,7 @@ import iconSad from './sad icon.png';
 import iconWow from './wow icon.png';
 import iconAngry from './angry icon.png';
 import cat from './cat.jpg';
+import googleLogo from './googleLogo.png';
 
 const images = {
     LogoDark,
@@ -24,6 +25,7 @@ const images = {
     iconWow,
     iconAngry,
     cat,
+    googleLogo,
 };
 
 export default images;

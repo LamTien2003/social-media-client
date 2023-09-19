@@ -38,7 +38,7 @@ const NotifyBox = (props: Props) => {
                     >
                         <img src={item.sender?.photo} alt="" className="w-10 h-10 rounded-full object-cover" />
                         <p className="text-content-100 text-xs">
-                            <span className="text-content-300 font-semibold mr-1">{`${item.sender.firstName} ${item.sender.lastName}`}</span>
+                            <span className="text-content-300 font-semibold mr-1">{`${item.sender?.firstName} ${item.sender?.lastName}`}</span>
                             <span>
                                 {item.type === 'reaction'
                                     ? 'vừa thả cảm xúc cho bài viết của bạn'

@@ -67,7 +67,7 @@ const FriendsRequest = () => {
                                 className="w-full max-h-[230px] rounded-tr-xl rounded-tl-xl object-cover"
                             />
                             <div className="w-full px-4 mt-2 text-left">
-                                <h4 className="font-semibold text-md dark:text-white">{`${item.firstName} ${item.lastName}`}</h4>
+                                <h4 className="font-semibold text-md dark:text-white">{`${item?.firstName} ${item?.lastName}`}</h4>
                                 <span className="text-xs text-content-300 font-semibold">
                                     {item?.commonFriends} bạn chung
                                 </span>

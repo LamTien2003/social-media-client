@@ -36,6 +36,24 @@ export const authApi = apiSlice.injectEndpoints({
                 return [];
             },
         }),
+        loginGoogle: builder.mutation<ResponseApi<User>, void>({
+            query() {
+                try {
+                    return {
+                        url: 'auth/loginGoogle',
+                        method: 'POST',
+                    };
+                } catch (error: any) {
+                    throw error.message;
+                }
+            },
+            invalidatesTags: (_result, error, _body) => {
+                if (!error) {
+                    return [{ type: 'Users', id: 'CURRENT' }];
+                }
+                return [];
+            },
+        }),
         register: builder.mutation<ResponseApi<User>, RegisterRequest>({
             query(body) {
                 try {
@@ -64,4 +82,4 @@ export const authApi = apiSlice.injectEndpoints({
     }),
 });
 
-export const { useLoginMutation, useRegisterMutation, useLogoutMutation } = authApi;
+export const { useLoginMutation, useLoginGoogleMutation, useRegisterMutation, useLogoutMutation } = authApi;

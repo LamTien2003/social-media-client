@@ -32,13 +32,12 @@ function App() {
     const messageRoomJoined = useSelector((state: RootState) => state.side.messageRoomJoined);
     const [triggerGetConversations] = conversationApi.endpoints.getConversations.useLazyQuery();
     const dispatch = useAppDispatch();
-
     const showPopupNotification = (notification: Notification) => {
         toast(
             <div className=" flex space-x-4">
                 <img src={notification.sender?.photo} alt="" className="w-10 h-10 rounded-full object-cover" />
                 <div className="flex-1">
-                    <span className="text-content-300 font-semibold mr-1">{`${notification.sender.firstName} ${notification.sender.lastName}`}</span>
+                    <span className="text-content-300 font-semibold mr-1">{`${notification.sender?.firstName} ${notification.sender?.lastName}`}</span>
                     <span>
                         {notification.type === 'reaction'
                             ? 'vừa thả cảm xúc cho bài viết của bạn'

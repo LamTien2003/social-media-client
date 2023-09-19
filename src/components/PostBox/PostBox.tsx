@@ -114,6 +114,7 @@ const PostBox = (props: PostBoxProps) => {
                             </span>
                         </NavLink>
                     </div>
+
                     <IconBoxWithPopup className="w-auto dark:text-white" icon={<FontAwesomeIcon icon={faEllipsis} />}>
                         <div className="z-50 absolute top-8 right-0 w-[300px] h-[200px] p-6 text-left overflow-y-scroll text-black dark:text-white text-xs bg-white dark:bg-dark-500 border border-content-100 dark:border-none dark:shadow-none rounded-md">
                             <div className="flex flex-col space-y-4">

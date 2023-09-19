@@ -32,7 +32,7 @@ const MessageHeadBox = (props: Props) => {
                         ? data.name
                         : data.members
                               .map((member) =>
-                                  member.id !== currentUser?.id ? `${member.firstName} ${member.lastName}` : null,
+                                  member.id !== currentUser?.id ? `${member?.firstName} ${member?.lastName}` : null,
                               )
                               .filter((item) => item !== null)
                               .join(', ')}

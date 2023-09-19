@@ -5,8 +5,8 @@ import type { BaseQueryFn, FetchArgs, FetchBaseQueryError } from '@reduxjs/toolk
 import { ResponseApi } from '@/type/Response';
 import { Mutex } from 'async-mutex';
 
-const URL =
-    process.env.NODE_ENV === 'production' ? 'https://social-media-server-d92z.onrender.com' : 'http://localhost:3000';
+// Because using Vite => import.meta.env instead of process.env like normal react app
+const URL = import.meta.env.PROD ? import.meta.env.VITE_URL_PRODUCTION : import.meta.env.VITE_URL_DEVELOPMENT;
 // const urlLocalhost = 'http://127.0.0.1:3000/';
 
 // Using for fix mutiple call refresh token
@@ -16,6 +16,9 @@ const mutex = new Mutex();
 const baseQuery = fetchBaseQuery({
     baseUrl: URL,
     prepareHeaders(headers, { getState }) {
+        // headers.set('Access-Control-Allow-Origin', '*');
+        // headers.set('Access-Control-Allow-Methods', 'GET,POST,PATCH,PUT,DELETE,HEAD,OPTIONS');
+
         const token = (getState() as RootState).user.accessToken || getToken();
         if (token) {
             headers.set('Authorization', `Bearer ${token}`);
@@ -34,7 +37,7 @@ const baseQueryWithReauth: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQue
     await mutex.waitForUnlock();
 
     let result = await baseQuery(args, api, extraOptions);
-    if (result?.error?.status === 403) {
+    if (result?.error?.status === 403 || result?.error?.status === 401) {
         if (!mutex.isLocked()) {
             const release = await mutex.acquire();
             try {

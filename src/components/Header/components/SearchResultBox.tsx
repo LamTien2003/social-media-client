@@ -19,7 +19,7 @@ const SearchResultBox = (props: Props) => {
                 >
                     <img src={item.photo} className="w-10 h-10 object-cover rounded-full" />
                     <div className="flex flex-col space-y-1 justify-center ">
-                        <h3 className="text-sm font-bold">{`${item.firstName} ${item.lastName}`}</h3>
+                        <h3 className="text-sm font-bold">{`${item?.firstName} ${item?.lastName}`}</h3>
                         {currentUser?.friends.some((friend) => friend.id === item.id) && (
                             <span className="text-xs text-content-100 font-medium">Bạn bè</span>
                         )}
